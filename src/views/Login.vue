@@ -1,32 +1,25 @@
 <template>
   <div class="login-container">
     <!--中间登录框-->
-    <el-card class="box-card">
-      <el-row class="box-row">
-        <!--登录框左侧图片-->
-        <el-col :span="12">
-          <el-image :src="imgSrc">
-            <div slot="placeholder" class="image-slot">
-              加载中<span class="dot">...</span>
-            </div>
-          </el-image>
-        </el-col>
-        <!--登录框右侧表单-->
-        <el-col :span="12">
-          <el-form label-width="80px" :model="formModel" class="login-form">
-            <el-form-item label="用户名">
-              <el-input v-model="formModel.phone"></el-input>
-            </el-form-item>
-            <el-form-item label="密码">
-              <el-input v-model="formModel.password"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="doLogin">登录</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </el-card>
+
+    <div class="box-card">
+      <div class="img-box">
+
+      </div>
+      <div class="login-box">
+        <el-form label-width="80px" :model="formModel" class="login-form">
+          <el-form-item label="用户名">
+            <el-input v-model="formModel.phone"></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input v-model="formModel.password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="doLogin">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,22 +48,39 @@ export default {
 <style lang="scss" scoped>
   $bg: #2d3a4b;
   .login-container {
-    background-color: $bg;
-    background-image: url('https://img.zcool.cn/community/011a5c590ac31ea801214550538d15.jpg@1280w_1l_2o_100sh.jpg');
-  }
-
-  .box-card {
-    width: 600px;
-    height: 300px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .box-row {
+    background-size: 100% 100%;
     height: 100%;
+    position: fixed;
     width: 100%;
+    background-color: $bg;
+    background-image: url("../assets/bg.jpg");
+
+    .box-card {
+      width: 700px;
+      height: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      display: flex;
+
+      .img-box{
+        width: 40%;
+        height: 100%;
+        border-right: solid 1px #dddddd;
+      }
+
+      .login-box{
+        width: 60%;
+        height: 100%;
+        .login-form{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+        }
+      }
+    }
   }
 
 </style>
