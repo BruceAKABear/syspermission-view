@@ -24,13 +24,13 @@
                         <!--一级菜单模板区-->
                         <template slot="title">
                             <i class="el-icon-location"></i>
-                            <span>导航一</span>
+                            <span>权限</span>
                         </template>
                         <!--二级菜单-->
-                        <el-menu-item index="1-1">
+                        <el-menu-item index="1-1" @click="addRole">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
-                                <span>二级菜单</span>
+                                <span>新增角色</span>
                             </template>
                         </el-menu-item>
                     </el-submenu>
@@ -61,6 +61,15 @@ export default {
       if (!data.status) {
         return this.$message.error('服务器异常')
       }
+    },
+    handleOpen (res) {
+      console.log(res)
+    },
+    handleClose (res) {
+      console.log(res)
+    },
+    addRole (res) {
+      console.log(res)
     }
   },
   created () {
