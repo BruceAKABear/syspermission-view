@@ -41,6 +41,8 @@ export default {
       console.log(data)
       if (data.status) {
         this.$message.success('登录成功')
+        window.sessionStorage.setItem('token', data.data)
+        this.$router.push('/home')
       } else {
         this.$message.error('用户名密码错误')
       }
