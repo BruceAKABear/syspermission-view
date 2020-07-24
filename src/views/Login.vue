@@ -4,9 +4,7 @@
 
     <div class="box-card">
       <div class="img-box">
-        <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595389096408&di=12e1184c636de5f92fee78daa5198876&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F86%2F10%2F01300000184180121920108394217.jpg"
-          alt="图片">
+
       </div>
       <div class="login-box">
         <el-form label-width="80px" :model="formModel" class="login-form">
@@ -30,20 +28,24 @@ export default {
   name: 'Login',
   data () {
     return {
-      formModel: {},
+      formModel: {
+        phone: '17317539623',
+        password: '123456'
+      },
       imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595328899340&di=ff5b3393970fb86a8dcdff25eea1415c&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F76ae7bf8e2a4b3ecc6604dad120ee3b2bff8ef7ec46b-degviu_fw658'
     }
   },
   methods: {
-    doLogin () {
-      if (this.formModel.phone === '17317539623' && this.formModel.password === '123456') {
+    async doLogin () {
+      const { data } = await this.$http.post('user/login', this.formModel)
+      console.log(data)
+      if (data.status) {
         this.$message.success('登录成功')
-        this.$router.push('/')
+        window.sessionStorage.setItem('token', data.data)
+        this.$router.push('/home')
       } else {
-        this.$message.warning('用户名或密码错误')
+        this.$message.error('用户名密码错误')
       }
-
-
     }
   }
 }
@@ -69,23 +71,17 @@ export default {
       background-color: #ffffff;
       display: flex;
 
-      .img-box{
+      .img-box {
         width: 40%;
         height: 100%;
-        border-right: solid 1px #eee;
-        img{
-          width: 300px;
-        }
+        border-right: solid 1px #dddddd;
       }
 
-      .login-box{
+      .login-box {
         width: 60%;
         height: 100%;
-        .login-form{
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translateY(-50%);
+
+        .login-form {
         }
       }
     }
