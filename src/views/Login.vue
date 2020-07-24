@@ -4,7 +4,9 @@
 
     <div class="box-card">
       <div class="img-box">
-
+        <img
+          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595389096408&di=12e1184c636de5f92fee78daa5198876&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F86%2F10%2F01300000184180121920108394217.jpg"
+          alt="图片">
       </div>
       <div class="login-box">
         <el-form label-width="80px" :model="formModel" class="login-form">
@@ -40,6 +42,8 @@ export default {
       } else {
         this.$message.warning('用户名或密码错误')
       }
+
+
     }
   }
 }
@@ -68,7 +72,10 @@ export default {
       .img-box{
         width: 40%;
         height: 100%;
-        border-right: solid 1px #dddddd;
+        border-right: solid 1px #eee;
+        img{
+          width: 300px;
+        }
       }
 
       .login-box{
@@ -78,6 +85,7 @@ export default {
           position: absolute;
           top: 50%;
           left: 50%;
+          transform: translateY(-50%);
         }
       }
     }
