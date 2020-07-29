@@ -1,0 +1,18 @@
+<template>
+    <div>
+        <H1>hello</H1>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'Welcome',
+  data () {
+    return {}
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

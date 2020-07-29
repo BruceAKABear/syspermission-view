@@ -11,26 +11,32 @@
         <!--主体-->
         <el-container>
             <!--侧边栏-->
-            <el-aside>
+            <el-aside :width="asideWidth">
+                <div class="toggle-button-box" @click="toggleColl">
+                    <i :class="menuCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"></i>
+                </div>
                 <el-menu
-                        default-active="2"
+                        :default-active="activePath"
                         class="el-menu-vertical-demo"
-                        @open="handleOpen"
-                        @close="handleClose"
                         background-color="#eeeeee"
+                        active-text-color="#409EFF"
+                        :unique-opened="true"
+                        :collapse="menuCollapse"
+                        :collapse-transition="false"
+                        :router="true"
                 >
                     <!--一级菜单-->
-                    <el-submenu index="1">
+                    <el-submenu :index="menu.code" v-for=" menu in menuList" :key="menu.id">
                         <!--一级菜单模板区-->
                         <template slot="title">
                             <i class="el-icon-location"></i>
-                            <span>权限</span>
+                            <span>{{menu.name}}</span>
                         </template>
                         <!--二级菜单-->
-                        <el-menu-item index="1-1" @click="addRole">
+                        <el-menu-item :index="submenu.code" v-for="submenu in menu.children" :key="submenu.id" @click="saveNav(submenu.code)">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
-                                <span>新增角色</span>
+                                <span>{{submenu.name}}</span>
                             </template>
                         </el-menu-item>
                     </el-submenu>
@@ -39,7 +45,7 @@
             </el-aside>
             <!--main-->
             <el-main>
-
+                <router-view></router-view>
             </el-main>
         </el-container>
     </el-container>
@@ -49,32 +55,41 @@
 export default {
   name: 'Home',
   data () {
-    return {}
+    return {
+      menuList: [],
+      menuCollapse: false,
+      asideWidth: '200px',
+      activePath: ''
+
+    }
   },
   methods: {
     logout () {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
-    async getMenu () {
+    async getMenuList () {
       const { data } = await this.$http.get('user/getMenus')
       if (!data.status) {
         return this.$message.error('服务器异常')
+      } else {
+        this.menuList = data.data
+        console.log(this.menuList)
       }
     },
-    handleOpen (res) {
-      console.log(res)
+    saveNav (ac) {
+      this.activePath = ac
+      window.sessionStorage.setItem('activePath', ac)
     },
-    handleClose (res) {
-      console.log(res)
-    },
-    addRole (res) {
-      console.log(res)
+    toggleColl () {
+      this.menuCollapse = !this.menuCollapse
+      this.menuCollapse ? this.asideWidth = '64px' : this.asideWidth = '200px'
     }
   },
   created () {
     // 获取菜单
-    this.getMenu()
+    this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   }
 }
 </script>
@@ -104,6 +119,19 @@ export default {
 
     .el-aside {
         background-color: #eeeeee;
+
+        .el-menu {
+            border-right: none;
+        }
+
+        .toggle-button-box {
+            background-color: #eeeeee;
+            color: white;
+            text-align: center;
+            font-size: 10px;
+            line-height: 24px;
+            cursor: pointer;
+        }
     }
 
 </style>
