@@ -4,8 +4,8 @@ import Login from '../views/Login'
 import Home from '../views/Home'
 import Welcome from '../views/Welcome'
 import UserList from '../views/user/UserList'
-import RoleList from '../views/permission/RoleList'
-import PermList from '../views/permission/PermList'
+import RoleList from '../views/roleperm/RoleList'
+import PermList from '../views/roleperm/PermList'
 
 Vue.use(VueRouter)
 
