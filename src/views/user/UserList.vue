@@ -49,7 +49,7 @@
         <el-table-column
           label="权限分配">
           <template slot-scope="scope">
-            <el-button type="primary" @click="showAssigndia(scope.row.id)">分配权限</el-button>
+            <el-button type="primary" @click="showAssigndia(scope.row.id)">分配角色</el-button>
           </template>
         </el-table-column>
       </el-table>

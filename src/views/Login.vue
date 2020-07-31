@@ -59,11 +59,10 @@ export default {
   methods: {
     async doLogin () {
       const { data } = await this.$http.post('user/login', this.formModel)
-      console.log(data)
       if (data.status) {
         this.$message.success('登录成功')
         window.sessionStorage.setItem('token', data.data)
-        this.$router.push('/home')
+        await this.$router.push('/home')
       } else {
         this.$message.error('用户名密码错误')
       }

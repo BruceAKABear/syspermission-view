@@ -33,7 +33,8 @@
                             <span>{{menu.name}}</span>
                         </template>
                         <!--二级菜单-->
-                        <el-menu-item :index="submenu.code" v-for="submenu in menu.children" :key="submenu.id" @click="saveNav(submenu.code)">
+                        <el-menu-item :index="submenu.code" v-for="submenu in menu.children" :key="submenu.id"
+                                      @click="saveNav(submenu.code)">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
                                 <span>{{submenu.name}}</span>
@@ -68,13 +69,17 @@ export default {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
-    async getMenuList () {
-      const { data } = await this.$http.get('user/getMenus')
+    /**
+       * 获取用户信息，必须要最先执行
+       * @returns {Promise<ElMessageComponent>}
+       */
+    async getUserInfo () {
+      const { data } = await this.$http.get('user/userInfo')
       if (!data.status) {
         return this.$message.error('服务器异常')
       } else {
-        this.menuList = data.data
-        console.log(this.menuList)
+        this.menuList = data.data.menuTree
+        console.log(data.data)
       }
     },
     saveNav (ac) {
@@ -88,7 +93,8 @@ export default {
   },
   created () {
     // 获取菜单
-    this.getMenuList()
+    this.getUserInfo()
+    // 设置当前路径，解决刷新后不存在问题
     this.activePath = window.sessionStorage.getItem('activePath')
   }
 }
