@@ -100,7 +100,7 @@ export default {
     }
 
     .el-header {
-        background-color: #eeeeee;
+        background-color: #606266;
         display: flex;
         justify-content: space-between;
         color: #000000;
@@ -118,14 +118,14 @@ export default {
     }
 
     .el-aside {
-        background-color: #eeeeee;
+        background-color: #606266;
 
         .el-menu {
             border-right: none;
         }
 
         .toggle-button-box {
-            background-color: #eeeeee;
+            background-color: #606266;
             color: white;
             text-align: center;
             font-size: 10px;

@@ -1,37 +1,42 @@
 <template>
   <div>
-    <!--面包屑导航-->
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-      <el-breadcrumb-item>角色列表</el-breadcrumb-item>
-    </el-breadcrumb>
-    <el-button @click="showAddRole">新增角色</el-button>
-    <!--表格-->
-    <el-table
-      :data="roleList"
-      style="width: 100%">
-      <el-table-column
-        prop="id"
-        label="主键"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="角色名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="description"
-        label="角色描述">
-      </el-table-column>
-      <el-table-column
-        label="操作">
-        <template slot-scope="scope">
-          <el-button v-if="scope.row" @click="showAssignPerm(scope.row)">分配权限</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="list-header">
+      <!--面包屑导航-->
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>权限管理</el-breadcrumb-item>
+        <el-breadcrumb-item>角色列表</el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-button type="primary" @click="showAddRole">新增角色</el-button>
+    </div>
+    <el-card>
+      <!--表格-->
+      <el-table
+        :data="roleList"
+        style="width: 100%">
+        <el-table-column
+          prop="id"
+          label="主键"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="角色名"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="description"
+          label="角色描述">
+        </el-table-column>
+        <el-table-column
+          label="操作">
+          <template slot-scope="scope">
+            <el-button v-if="scope.row" @click="showAssignPerm(scope.row)">分配权限</el-button>
+            <el-button v-if="scope.row" type="danger" @click="deleteRole(scope.row.id)">删除角色</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
     <!--新增用户对话框-->
     <el-dialog
       title="新增用户"
@@ -54,6 +59,7 @@
                 <el-button type="primary" @click="saveRole">确 定</el-button>
             </span>
     </el-dialog>
+
   </div>
 </template>
 
@@ -90,6 +96,21 @@ export default {
     closeDialog () {
       this.dialogVisible = false
       this.roleModel = {}
+    },
+    deleteRole (id) {
+      this.$confirm('是否确认删除').then(async () => {
+        const { data } = await this.$http.delete('role/deleteById/' + id)
+        if (data.status) {
+          this.$message.success('删除成功')
+          // 重启请求列表
+          await this.queryRoleList()
+        } else {
+          this.$message.error('角色被使用不能删除')
+        }
+      })
+    },
+    showAssignPerm (model) {
+      console.log('hello------')
     }
   },
   created () {
@@ -98,6 +119,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .list-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+  }
 </style>
