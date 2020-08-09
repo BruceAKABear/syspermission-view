@@ -4,7 +4,7 @@ import router from './router'
 import './plugins/element.js'
 import Axios from 'axios'
 
-Axios.defaults.baseURL = 'http://127.0.0.1:8888'
+Axios.defaults.baseURL = 'http://47.111.252.160:8888'
 Axios.interceptors.request.use(config => {
   console.log('拦截器中封装token')
   config.headers.token = window.sessionStorage.getItem('token')
